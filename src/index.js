@@ -6,6 +6,8 @@ require(['gojs', 'knockout', 'async', 'firebase'], function(go, ko, async, fireb
     require('imports-loader?UIkit=uikit!uikit/src/js/components/tooltip');
 
     jQuery('#diagram').height(jQuery(window).height() - jQuery('nav').height() - 2);
+    jQuery('#file').prop('disabled', true);
+
     var diagram = require('./diagram')(go, require('./GenogramLayout')(go));
     require('./form')(ko, async, firebase, diagram)([]);
 
@@ -19,6 +21,7 @@ require(['gojs', 'knockout', 'async', 'firebase'], function(go, ko, async, fireb
     });
     firebase.auth().onAuthStateChanged(function(user) {
         if (user) {
+            jQuery('#file').prop('disabled', false);
             jQuery('#btn-load').click();
         }
     });

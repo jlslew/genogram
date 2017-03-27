@@ -34,6 +34,25 @@ module.exports = function(ko, async, firebase, diagram) {
             self.dob = ko.observable('');
             self.dead = ko.observable(false);
             self.dod = ko.observable('');
+            self.img = ko.observable('');
+
+            self.src = ko.observable('//placehold.it/128');
+            self.file = ko.observable(null);
+
+            jQuery('#file').change(function() {
+                if (this.files && this.files[0]) {
+                    var reader = new FileReader();
+
+                    reader.onload = function(e) {
+                        self.src(e.target.result);
+                    };
+
+                    reader.readAsDataURL(this.files[0]);
+                    self.file(this.files[0]);
+
+                    self.img(self.db() + '/' + this.files[0].name);
+                }
+            });
 
             self.id.subscribe(function(value) {
                 if (value === undefined) {
@@ -51,6 +70,19 @@ module.exports = function(ko, async, firebase, diagram) {
                             self.dob(self.persons()[i].b);
                             self.dead(self.persons()[i].d !== '');
                             self.dod(self.persons()[i].d);
+                            self.img(self.persons()[i].img);
+
+                            if (self.img()) {
+                                jQuery('#modal :input').prop('disabled', true);
+
+                                var ref = firebase.storage().ref(self.img());
+                                ref.getDownloadURL().then(function(url) {
+                                    jQuery('#modal :input').prop('disabled', false);
+                                    self.src(url);
+                                });
+                            } else {
+                                self.src('//placehold.it/128');
+                            }
                         }
                     }
                 }
@@ -72,6 +104,10 @@ module.exports = function(ko, async, firebase, diagram) {
                 self.dob('');
                 self.dead(false);
                 self.dod('');
+                self.img('');
+
+                self.src('//placehold.it/128');
+                self.file(null);
             };
 
             self.load = function() {
@@ -120,6 +156,8 @@ module.exports = function(ko, async, firebase, diagram) {
             };
 
             self.save = function(form) {
+                jQuery('#modal :input').prop('disabled', true);
+
                 var person = {};
                 person['key'] = self.key();
                 person['fn'] = self.first();
@@ -141,6 +179,21 @@ module.exports = function(ko, async, firebase, diagram) {
                 if (self.dead() && person['d'] === '') {
                     person['d'] = ' ';
                 }
+
+                if (self.img()) {
+                    person['img'] = self.img();
+                }
+
+                if (self.file()) {
+                    var ref = firebase.storage().ref(self.img());
+                    ref.put(self.file()).then(function() {
+                        self.push(person);
+                    }).catch(function(err) {
+                        console.error(err);
+                    });
+                } else {
+                    self.push(person);
+                }
             };
 
             self.push = function(person) {
@@ -159,6 +212,8 @@ module.exports = function(ko, async, firebase, diagram) {
 
                 firebase.database().ref(self.db() + '/' + id).set(person);
                 self.reset();
+
+                jQuery('#modal :input').prop('disabled', false);
             };
         }
 
