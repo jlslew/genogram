@@ -36,8 +36,8 @@ module.exports = function(ko, async, firebase, diagram) {
             self.dod = ko.observable('');
             self.img = ko.observable('');
 
-            self.src = ko.observable('//placehold.it/128');
             self.file = ko.observable(null);
+            self.src = ko.observable('');
 
             jQuery('#file').change(function() {
                 if (this.files && this.files[0]) {
@@ -52,6 +52,16 @@ module.exports = function(ko, async, firebase, diagram) {
 
                     self.img(self.db() + '/' + this.files[0].name);
                 }
+            });
+
+            jQuery('#modal').on('show.uk.modal', function() {
+                jQuery('#modal :input').prop('disabled', true);
+
+                var ref = firebase.storage().ref('default-avatar.png');
+                ref.getDownloadURL().then(function(url) {
+                    jQuery('#modal :input').prop('disabled', false);
+                    self.src(url);
+                });
             });
 
             self.id.subscribe(function(value) {
@@ -81,7 +91,13 @@ module.exports = function(ko, async, firebase, diagram) {
                                     self.src(url);
                                 });
                             } else {
-                                self.src('//placehold.it/128');
+                                jQuery('#modal :input').prop('disabled', true);
+
+                                var ref = firebase.storage().ref('default-avatar.png');
+                                ref.getDownloadURL().then(function(url) {
+                                    jQuery('#modal :input').prop('disabled', false);
+                                    self.src(url);
+                                });
                             }
                         }
                     }
@@ -106,8 +122,18 @@ module.exports = function(ko, async, firebase, diagram) {
                 self.dod('');
                 self.img('');
 
-                self.src('//placehold.it/128');
+                jQuery('#modal :input').prop('disabled', true);
                 self.file(null);
+
+                try {
+                    var ref = firebase.storage().ref('default-avatar.png');
+                    ref.getDownloadURL().then(function(url) {
+                        jQuery('#modal :input').prop('disabled', false);
+                        self.src(url);
+                    });
+                } catch (err) {
+//                    console.error(err);
+                }
             };
 
             self.load = function() {
@@ -130,17 +156,21 @@ module.exports = function(ko, async, firebase, diagram) {
 
                                 return data;
                             }), function(data, callback) {
-                                if (!data.hasOwnProperty('img')) {
-                                    callback(null, data);
-                                    return;
+                                if (data.hasOwnProperty('img')) {
+                                    var ref = firebase.storage().ref(data['img']);
+                                    ref.getDownloadURL().then(function(url) {
+                                        data['source'] = url;
+
+                                        callback(null, data);
+                                    });
+                                } else {
+                                    var ref = firebase.storage().ref('default-avatar.png');
+                                    ref.getDownloadURL().then(function(url) {
+                                        data['source'] = url;
+
+                                        callback(null, data);
+                                    });
                                 }
-
-                                var ref = firebase.storage().ref(data['img']);
-                                ref.getDownloadURL().then(function(url) {
-                                    data['source'] = url;
-
-                                    callback(null, data);
-                                });
                             }, function(err, results) {
                                 if (err) {
                                     console.error(err);
