@@ -18,5 +18,9 @@
     "bugs": {
         "url": "https://github.com/jlslew/genogram/issues"
     },
-    "homepage": "http://jlslew.github.io/genogram"
+    "homepage": "http://jlslew.github.io/genogram",
+    "dependencies": {
+        "file-loader": "^0.10.1",
+        "webpack": "^2.3.2"
+    }
 }
