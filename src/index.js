@@ -1,6 +1,6 @@
 require(['./assets/index.html', './styles/index.less']);
 
-require(['gojs'], function(go) {
+require(['gojs', 'knockout'], function(go, ko) {
     require('imports-loader?UIkit=uikit!uikit/src/js/components/form-select');
     require('imports-loader?UIkit=uikit!uikit/src/js/components/datepicker');
 
@@ -53,4 +53,6 @@ require(['gojs'], function(go) {
 
     jQuery('#diagram').height(jQuery(window).height() - jQuery('nav').height() - 2);
     require('./diagram')(go, require('./GenogramLayout')(go))(data);
+
+    require('./form')(ko)(data);
 });

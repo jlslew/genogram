@@ -33,25 +33,25 @@
                             <fieldset class="uk-form-row">
                                 <label class="uk-form-label" for="input-key">Select a person</label>
                                 <div class="uk-form-controls">
-                                    <select id="input-key"></select>
+                                    <select id="input-key" data-bind="options: persons, optionsCaption: 'Please select an existing person', optionsText: 'n', optionsValue: 'key', value: key"></select>
                                 </div>
                             </fieldset>
                             <fieldset class="uk-form-row">
                                 <label class="uk-form-label" for="input-first">First Name</label>
                                 <div class="uk-form-controls">
-                                    <input id="input-first" type="text" />
+                                    <input id="input-first" type="text" data-bind="value: first" />
                                 </div>
                             </fieldset>
                             <fieldset class="uk-form-row">
                                 <label class="uk-form-label" for="input-last">Last Name</label>
                                 <div class="uk-form-controls">
-                                    <input id="input-last" type="text" />
+                                    <input id="input-last" type="text" data-bind="value: last" />
                                 </div>
                             </fieldset>
                             <fieldset class="uk-form-row">
                                 <label class="uk-form-label" for="input-sex">Gender</label>
                                 <div class="uk-form-controls">
-                                    <select id="input-sex">
+                                    <select id="input-sex" data-bind="options: gender, optionsCaption: 'Please select a gender', optionsText: 't', optionsValue: 'v', value: sex">
                                         <option></option>
                                     </select>
                                 </div>
@@ -59,19 +59,19 @@
                             <fieldset class="uk-form-row">
                                 <label class="uk-form-label" for="input-mother">Mother</label>
                                 <div class="uk-form-controls">
-                                    <select id="input-mother"></select>
+                                    <select id="input-mother" data-bind="options: mothers, optionsCaption: 'Please select an existing person', optionsText: 'n', optionsValue: 'key', value: mother"></select>
                                 </div>
                             </fieldset>
                             <fieldset class="uk-form-row">
                                 <label class="uk-form-label" for="input-father">Father</label>
                                 <div class="uk-form-controls">
-                                    <select id="input-father"></select>
+                                    <select id="input-father" data-bind="options: fathers, optionsCaption: 'Please select an existing person', optionsText: 'n', optionsValue: 'key', value: father"></select>
                                 </div>
                             </fieldset>
                             <fieldset class="uk-form-row">
                                 <label class="uk-form-label" for="input-spouse">Spouse</label>
                                 <div class="uk-form-controls">
-                                    <select id="input-spouse"></select>
+                                    <select id="input-spouse" data-bind="options: persons, optionsCaption: 'Please select an existing person', optionsText: 'n', optionsValue: 'key', value: spouse"></select>
                                 </div>
                             </fieldset>
                             <fieldset class="uk-form-row">
@@ -79,22 +79,22 @@
                                 <div class="uk-form-controls">
                                     <div class="uk-form-icon">
                                         <i class="uk-icon-calendar"></i>
-                                        <input id="input-birth" type="text" data-uk-datepicker="{format:'DD/MM/YYYY'}" />
+                                        <input id="input-birth" type="text" data-bind="value: dob" data-uk-datepicker="{format:'DD/MM/YYYY'}" />
                                     </div>
                                 </div>
                             </fieldset>
                             <fieldset class="uk-form-row">
                                 <label class="uk-form-label" for="input-dead">Has passed away?</label>
                                 <div class="uk-form-controls">
-                                    <input id="input-dead" type="checkbox" />
+                                    <input id="input-dead" type="checkbox" data-bind="checked: dead" />
                                 </div>
                             </fieldset>
-                            <fieldset class="uk-form-row">
+                            <fieldset class="uk-form-row" data-bind="visible: dead">
                                 <label class="uk-form-label" for="input-death">Date of death</label>
                                 <div class="uk-form-controls">
                                     <div class="uk-form-icon">
                                         <i class="uk-icon-calendar"></i>
-                                        <input id="input-death" type="text" data-uk-datepicker="{format:'DD/MM/YYYY'}" />
+                                        <input id="input-death" type="text" data-bind="value: dod" data-uk-datepicker="{format:'DD/MM/YYYY'}" />
                                     </div>
                                 </div>
                             </fieldset>
