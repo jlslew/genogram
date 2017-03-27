@@ -1,0 +1,22 @@
+{
+    "name": "@jlslew/genogram",
+    "version": "1.0.0",
+    "description": "A diagram to display traditional family tree",
+    "main": "webpack.config.js",
+    "scripts": {
+        "build": "webpack -p; git add -f build; git commit -m \"Building...\"",
+        "deploy": "git subtree push --prefix build origin gh-pages",
+        "watch": "webpack -d --watch"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/jlslew/genogram.git"
+    },
+    "keywords": [],
+    "author": "Jonathan Lee Slew <jonathan.leeslew@sympatico.ca>",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/jlslew/genogram/issues"
+    },
+    "homepage": "http://jlslew.github.io/genogram"
+}
