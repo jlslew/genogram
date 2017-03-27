@@ -20,8 +20,14 @@
     },
     "homepage": "http://jlslew.github.io/genogram",
     "dependencies": {
+        "css-loader": "^0.27.3",
         "file-loader": "^0.10.1",
         "gojs": "^1.7.5",
+        "jquery": "^3.2.1",
+        "less": "^2.7.2",
+        "less-loader": "^4.0.2",
+        "style-loader": "^0.16.0",
+        "uikit": "^2.27.2",
         "webpack": "^2.3.2"
     }
 }
