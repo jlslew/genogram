@@ -21,6 +21,7 @@
     "homepage": "http://jlslew.github.io/genogram",
     "dependencies": {
         "css-loader": "^0.27.3",
+        "extract-text-webpack-plugin": "^2.1.0",
         "file-loader": "^0.10.1",
         "gojs": "^1.7.5",
         "jquery": "^3.2.1",

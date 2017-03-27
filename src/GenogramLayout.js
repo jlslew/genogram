@@ -45,7 +45,7 @@ module.exports = function(go) {
                 // create vertex representing both husband and wife
                 var vertex = net.addNode(node);
                 // now define the vertex size to be big enough to hold both spouses
-                vertex.width = spouseA.actualBounds.width + this.spouseSpacing + spouseB.actualBounds.width;
+                vertex.width = spouseA.actualBounds.width + (this.spouseSpacing * 3) + spouseB.actualBounds.width;
                 vertex.height = Math.max(spouseA.actualBounds.height, spouseB.actualBounds.height);
                 vertex.focus = new go.Point(spouseA.actualBounds.width + this.spouseSpacing / 2, vertex.height / 2);
             } else {
