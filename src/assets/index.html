@@ -34,6 +34,7 @@
                                 <label class="uk-form-label" for="input-key">Select a person</label>
                                 <div class="uk-form-controls">
                                     <select id="input-key" data-bind="options: persons, optionsCaption: 'Please select an existing person', optionsText: 'n', optionsValue: 'key', value: key"></select>
+                                    <span class="uk-icon-hover uk-icon-question" title="To create a new person, leave it blank." data-uk-tooltip></span>
                                 </div>
                             </fieldset>
                             <fieldset class="uk-form-row">
@@ -60,18 +61,21 @@
                                 <label class="uk-form-label" for="input-mother">Mother</label>
                                 <div class="uk-form-controls">
                                     <select id="input-mother" data-bind="options: mothers, optionsCaption: 'Please select an existing person', optionsText: 'n', optionsValue: 'key', value: mother"></select>
+                                    <span class="uk-icon-hover uk-icon-question" title="Both mom and dad must be selected for it to work." data-uk-tooltip></span>
                                 </div>
                             </fieldset>
                             <fieldset class="uk-form-row">
                                 <label class="uk-form-label" for="input-father">Father</label>
                                 <div class="uk-form-controls">
                                     <select id="input-father" data-bind="options: fathers, optionsCaption: 'Please select an existing person', optionsText: 'n', optionsValue: 'key', value: father"></select>
+                                    <span class="uk-icon-hover uk-icon-question" title="Both mom and dad must be selected for it to work." data-uk-tooltip></span>
                                 </div>
                             </fieldset>
                             <fieldset class="uk-form-row">
                                 <label class="uk-form-label" for="input-spouse">Spouse</label>
                                 <div class="uk-form-controls">
                                     <select id="input-spouse" data-bind="options: persons, optionsCaption: 'Please select an existing person', optionsText: 'n', optionsValue: 'key', value: spouse"></select>
+                                    <span class="uk-icon-hover uk-icon-question" title="No need to set it on both person." data-uk-tooltip></span>
                                 </div>
                             </fieldset>
                             <fieldset class="uk-form-row">

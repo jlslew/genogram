@@ -3,6 +3,7 @@ require(['./assets/index.html', './styles/index.less']);
 require(['gojs', 'knockout'], function(go, ko) {
     require('imports-loader?UIkit=uikit!uikit/src/js/components/form-select');
     require('imports-loader?UIkit=uikit!uikit/src/js/components/datepicker');
+    require('imports-loader?UIkit=uikit!uikit/src/js/components/tooltip');
 
     // n: name, s: sex, m: mother, f: father, p: partner, b: date of birth, d: date of death
     var data = [
