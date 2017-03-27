@@ -1,4 +1,4 @@
-module.exports = function(ko, firebase) {
+module.exports = function(ko, firebase, diagram) {
     return function(array) {
         function Form() {
             var self = this;
@@ -19,6 +19,9 @@ module.exports = function(ko, firebase) {
                     return person.s === 'M';
                 });
             });
+
+            self.db = ko.observable('sample');
+            self.ref = null;
 
             self.id = ko.observable('');
             self.key = ko.observable('');
@@ -53,6 +56,10 @@ module.exports = function(ko, firebase) {
                 }
             });
 
+            self.db.subscribe(function() {
+                self.load();
+            });
+
             self.reset = function() {
                 self.id('');
                 self.key('');
@@ -65,6 +72,32 @@ module.exports = function(ko, firebase) {
                 self.dob('');
                 self.dead(false);
                 self.dod('');
+            };
+
+            self.load = function() {
+                if (self.ref !== null) {
+                    self.ref.off();
+                }
+
+                self.ref = firebase.database().ref(self.db());
+
+                self.ref.once('value', function(snapshot) {
+                    if (snapshot.val() === null) {
+                        self.db('sample');
+                    } else {
+                        // Convert a map to an array
+                        self.persons(jQuery.map(snapshot.val(), function(person, id) {
+                            person['n'] = person['fn'] + ' ' + person['ln'];
+                            person['id'] = id;
+
+                            return person;
+                        }));
+
+                        self.ref.on('value', function(snapshot) {
+                            diagram(snapshot.val());
+                        });
+                    }
+                });
             };
 
             self.save = function(form) {

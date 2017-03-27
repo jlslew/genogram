@@ -11,6 +11,14 @@
         <nav class="uk-navbar uk-navbar-attached">
             <a class="uk-navbar-brand" href="/">Family Tree</a>
 
+            <div class="uk-navbar-content">
+                <form class="uk-form uk-margin-remove uk-display-inline-block" data-bind="submit: load">
+                    <label class="uk-form-label" for="input-ref">Diagram name: </label>
+                    <input id="input-ref" type="text" data-bind="value: db" />
+                    <button id="btn-load" class="uk-button uk-button-primary" type="submit">Load</button>
+                </form>
+            </div>
+
             <div class="uk-navbar-content uk-navbar-flip">
                 <button id="btn-edit" class="uk-button uk-button-danger" data-uk-modal="{target:'#modal'}">Edit</button>
             </div>
