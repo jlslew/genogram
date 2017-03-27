@@ -1,6 +1,9 @@
 require(['./assets/index.html', './styles/index.less']);
 
 require(['gojs'], function(go) {
+    require('imports-loader?UIkit=uikit!uikit/src/js/components/form-select');
+    require('imports-loader?UIkit=uikit!uikit/src/js/components/datepicker');
+
     // n: name, s: sex, m: mother, f: father, p: partner, b: date of birth, d: date of death
     var data = [
         {key: 0, n: 'Aaron', s: 'M', m: -10, f: -11, p: 1, b: '', d: ''},
