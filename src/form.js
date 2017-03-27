@@ -1,4 +1,4 @@
-module.exports = function(ko, firebase, diagram) {
+module.exports = function(ko, async, firebase, diagram) {
     return function(array) {
         function Form() {
             var self = this;
@@ -85,16 +85,35 @@ module.exports = function(ko, firebase, diagram) {
                     if (snapshot.val() === null) {
                         self.db('sample');
                     } else {
-                        // Convert a map to an array
-                        self.persons(jQuery.map(snapshot.val(), function(person, id) {
-                            person['n'] = person['fn'] + ' ' + person['ln'];
-                            person['id'] = id;
-
-                            return person;
-                        }));
-
                         self.ref.on('value', function(snapshot) {
-                            diagram(snapshot.val());
+                            jQuery('#modal :input').prop('disabled', true);
+
+                            async.map(jQuery.map(snapshot.val(), function(data, id) {
+                                data['n'] = data['fn'] + ' ' + data['ln'];
+                                data['id'] = id;
+
+                                return data;
+                            }), function(data, callback) {
+                                if (!data.hasOwnProperty('img')) {
+                                    callback(null, data);
+                                    return;
+                                }
+
+                                var ref = firebase.storage().ref(data['img']);
+                                ref.getDownloadURL().then(function(url) {
+                                    data['source'] = url;
+
+                                    callback(null, data);
+                                });
+                            }, function(err, results) {
+                                if (err) {
+                                    console.error(err);
+                                }
+
+                                jQuery('#modal :input').prop('disabled', false);
+                                self.persons(results);
+                                diagram(results);
+                            });
                         });
                     }
                 });
